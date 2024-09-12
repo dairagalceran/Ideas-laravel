@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\IdeaController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,10 +19,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
-/*
-- agregado por  laravel breeze
-*/
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -33,6 +30,5 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
-/*
-- HASTA acá  agregado por  laravel breeze
-*/
+
+Route::get('/ideas' , [IdeaController::class, 'index'])->name('ideas.index');
