@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id')->references('id')->on('users')->cascadeOnDelete();//FK tabla: User relacion una idea pertenece a un user
             $table->string('title');
             $table->text('description');
-            $table->unsignedInteger('likes');
+            $table->unsignedInteger('likes')->default(0);
             $table->timestamps();
         });
     }
