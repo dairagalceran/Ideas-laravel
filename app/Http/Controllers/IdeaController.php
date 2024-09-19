@@ -105,4 +105,19 @@ class IdeaController extends Controller
 
         return redirect()->route('idea.index');
     }
+
+    public function synchronizeLikes(Request $request, Idea $idea)
+    {
+        $request->user()->ideasLiked()->toggle([$idea->id]); //obtengo del request el dato del user logueado y
+                                                            //tomo del Modelo User la function ideas Liked de many-to many
+                                                            //toogle() funcion de laravel para tablas pivote(many-to many)
+        //$idea->users()->toggle([$request->user()->id]); otra forma de hacer lo mismo que el anterior
+
+        $likesQuantity =  $idea->users()->count(); //llamo al objeto idea, llamo a su método   users() y  llamo a count() para contar cuantos usuarios le dieron like a esa idea
+
+        $idea->update(['likes'=> $likesQuantity]); //actuaiza la pagina index
+
+        return redirect()->route('idea.show' , $idea);
+    }
 }
+

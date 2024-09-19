@@ -17,7 +17,7 @@ class Idea extends Model
      * seguridad al sistema
      */
 
-    protected $fillable = ['user_id' , 'title', 'description'];
+    protected $fillable = ['user_id' , 'title', 'description', 'likes'];
     protected $casts = ['created_at' => 'datetime'];    // en index se agrega por ejemplo formato {{$idea->created_at->format('d/m/Y')}}
 
     /**
@@ -39,7 +39,7 @@ class Idea extends Model
      */
     public function users(): BelongsToMany
     {
-        return $this->belongsToMany(Idea::class);
+        return $this->belongsToMany(User::class);
     }
 
 }
