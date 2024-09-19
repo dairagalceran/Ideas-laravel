@@ -37,6 +37,8 @@ class IdeaController extends Controller
             'description' => $validate['description'],
         ]);
 
+        session()->flash('message' , 'Idea creada correctamente.');
+
         return redirect()->route('idea.index');
 
     }
@@ -56,6 +58,9 @@ class IdeaController extends Controller
 
         $editedIdea = Idea::findOrFail($id);
         $editedIdea->update($validate );
+
+        session()->flash('message' , 'Idea actualizada correctamente.');
+
         return redirect(route('idea.index'));
 
     }
@@ -71,6 +76,9 @@ class IdeaController extends Controller
     public function delete(Idea $idea):RedirectResponse
     {
         $idea->delete();
+
+        session()->flash('message' , 'Idea eliminada correctamente.');
+
         return redirect()->route('idea.index');
     }
 }

@@ -1,14 +1,24 @@
 <x-app-layout>
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="overflow-hidden shadow-sm sm:rounded-lg mb-4">
+
+            {{--mensaje sesion flash--}}
+            @if (@session()->has('message'))
+                <div class="text-center  bg-gray-100 rounded-md p-2">
+                    <span class="text-indigo-600 text-xl"> {{session('message')}}Mensaje sesion flash</span>
+                </div>
+
+            @endif
+
+
+            <div class="overflow-hidden shadow-sm sm:rounded-lg  p-2  mb-4 mt-4">
                 <div class="pcrear-6 text-gray-900 dark:text-gray-100s space-x-8">
                     <a href="{{route('idea.create')}}" class="px-4 py-4 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-500 rounded-md font-semibold text-sm text-gray-700 dark:text-gray-300 uppercase tracking-widest shadow-sm hover:bg-gray-50 dark:hover:bg-gray-700">{{ __('Agregar') }}</a>
                     <a href="#" class="px-4 py-4 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-500 rounded-md font-semibold text-sm text-gray-700 dark:text-gray-300 uppercase tracking-widest shadow-sm hover:bg-gray-50 dark:hover:bg-gray-700">{{ __('Las Mejores') }}</a>
                 </div>
             </div>
-            <div class="bg-white dark:bg-gray-800 shadow-sm sm:rounded-lg">
 
+            <div class="bg-white dark:bg-gray-800 shadow-sm sm:rounded-lg">
                 {{--for  --}}
                 @forelse ($ideas as $idea) <!-- permite mostrar el mensaje de empty si no hay datos en la BD -->
                 <div class="p-6 flex space-x-2">
