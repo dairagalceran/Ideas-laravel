@@ -26,7 +26,7 @@
                                 <span class="text-gray-800 dark:text-gray-100">{{$idea->user->name}}</span>
                                 <small class="ml-2 text-sm text-gray-600 dark:text-gray-100">{{$idea->created_at->format('d/m/Y')}}</small>
                                 @unless($idea->created_at->eq($idea->updated_at))
-                                    <small class="text-sm text-gray-400"> &middot; Editado:  {{ __('edited') }}</small>
+                                    <small class="text-sm text-gray-400"> &middot; Editado:  {{ $idea->updated_at->format('d/m/Y') }}</small>
                                 @endunless
                             </div>
                             @auth
@@ -39,17 +39,17 @@
                                         </button>
                                     </x-slot>
                                     <x-slot name="content">
-                                        <x-dropdown-link :href="$myroute='zzz'">
+                                        <x-dropdown-link :href=" route('idea.show' , $idea)">
                                             Ver
                                         </x-dropdown-link>
-                                        <x-dropdown-link :href="$myroute='zzz'">
+                                        <x-dropdown-link :href="route('idea.edit', $idea->id)"> {{-- se usa ':' para enviar algo dinámico--}}
                                             Editar
                                         </x-dropdown-link>
                                         <form method="POST" action="">
                                             @csrf
                                             @method('delete')
                                             <x-dropdown-link :href="$myroute='zzz'" onclick="event.preventDefault(); this.closest('form').submit();">
-                                                Borrar
+                                                Eliminar
                                             </x-dropdown-link>
                                         </form>
                                     </x-slot>

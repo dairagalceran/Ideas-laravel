@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Idea;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 
 class IdeaController extends Controller
 {
@@ -19,10 +20,10 @@ class IdeaController extends Controller
 
     public function create(): View
     {
-        return  view('ideas.create');
+        return  view('ideas.create_or_edit');
     }
 
-    public function store(Request $request)
+    public function store(Request $request) :RedirectResponse
     {
 
         $validate =$request->validate([
@@ -37,6 +38,33 @@ class IdeaController extends Controller
         ]);
 
         return redirect()->route('idea.index');
+
+    }
+
+    public function edit(int $id):View
+    {
+        $editedIdea = Idea::findOrFail($id);
+        return view('ideas.create_or_edit')->with('idea_edit', $editedIdea);
+    }
+
+    public function update(Request $request, int  $id):RedirectResponse
+    {
+        $validate =$request->validate([
+            'title' => 'required|string|max:100',
+            'description' => 'required|string|max:500',
+        ]);
+
+        $editedIdea = Idea::findOrFail($id);
+        $editedIdea->update($validate );
+        return redirect(route('idea.index'));
+
+    }
+
+    public function show(Idea $idea):View
+    {
+
+       // $ideaToShow = Idea::findOrFail($id);
+        return view('ideas.show')->with('idea' , $idea);
 
     }
 }
