@@ -70,6 +70,14 @@ class User extends Authenticatable
         return $this->belongsToMany(Idea::class);
     }
 
+
+    /**
+     * en el modelo User llamo a ideasLiked()
+     * exists() retorna booleano
+     * idea_id pertenece a la tabla pivote (manyToMany)
+     * va averifica si el user autenticado esta asociado en la columna idea_id
+     * esa idea que se envia por parámetro
+     */
     public function iLikeIt($ideaId):bool
     {
         return $this->ideasLiked()->where('idea_id' , $ideaId)->exists();

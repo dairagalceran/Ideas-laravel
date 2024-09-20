@@ -52,16 +52,23 @@
                                         <x-dropdown-link :href=" route('idea.show' , $idea)">
                                             Ver
                                         </x-dropdown-link>
-                                        <x-dropdown-link :href="route('idea.edit', $idea->id)"> {{-- se usa ':' para enviar algo dinámico--}}
-                                            Editar
-                                        </x-dropdown-link>
-                                        <form method="POST" action="{{route('idea.delete' , $idea)}}"> {{--Usa JAVASCRIPT porque esto no es un botón sino un dropdown--}}
-                                            @csrf
-                                            @method('delete')
-                                            <x-dropdown-link :href="'#'" onclick="event.preventDefault(); this.closest('form').submit();">
-                                                Eliminar
+
+                                        @can('update', $idea)
+                                            <x-dropdown-link :href="route('idea.edit', $idea)"> {{-- se usa ':' para enviar algo dinámico--}}
+                                                Editar
                                             </x-dropdown-link>
-                                        </form>
+                                        @endcan
+
+                                        @can('delete', $idea)
+                                            <form method="POST" action="{{route('idea.delete' , $idea)}}"> {{--Usa JAVASCRIPT porque esto no es un botón sino un dropdown--}}
+                                                @csrf
+                                                @method('delete')
+                                                <x-dropdown-link :href="'#'" onclick="event.preventDefault(); this.closest('form').submit();">
+                                                    Eliminar
+                                                </x-dropdown-link>
+                                            </form>
+                                        @endcan
+
                                     </x-slot>
                                 </x-dropdown>
                             @endauth

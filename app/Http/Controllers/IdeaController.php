@@ -62,28 +62,32 @@ class IdeaController extends Controller
 
     }
 
+
     // solo muestra los datos guardados para modificar
-    public function edit(int $id):View
+    public function edit(Idea $idea):View
     {
-        $editedIdea = Idea::findOrFail($id);
-        return view('ideas.create_or_edit')->with('idea_edit', $editedIdea);
+        $this->authorize('update' , $idea);
+        //$editedIdea = Idea::findOrFail($idea);
+        return view('ideas.create_or_edit')->with('idea_edit', $idea);
     }
 
 
     // actualiza idea en base de datos
-    public function update(Request $request, int  $id):RedirectResponse
+    public function update(Request $request, Idea  $idea): RedirectResponse
     {
+        $this->authorize('update', $idea);
+
         $validate =$request->validate(
             $this->validateRules ,
             $this-> errorMessages
         );
 
-        $editedIdea = Idea::findOrFail($id);
-        $editedIdea->update($validate );
+        //$editedIdea = Idea::findOrFail($idea->id);
+        $idea->update($validate );
 
         session()->flash('message' , 'Idea actualizada correctamente.');
 
-        return redirect(route('idea.index'));
+        return redirect()->route('idea.index');
 
     }
 
@@ -97,14 +101,20 @@ class IdeaController extends Controller
 
     }
 
+
+
     public function delete(Idea $idea):RedirectResponse
     {
+        $this->authorize('delete' , $idea);
+
         $idea->delete();
 
         session()->flash('message' , 'Idea eliminada correctamente.');
 
         return redirect()->route('idea.index');
     }
+
+
 
     public function synchronizeLikes(Request $request, Idea $idea)
     {

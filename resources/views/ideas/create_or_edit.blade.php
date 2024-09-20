@@ -18,7 +18,6 @@
 
                         <textarea
                             name="description"
-
                             class="mt-2 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-500 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"
                         >{{ old('description',  empty($idea_edit) ? 'Mi Descripción......' : $idea_edit->description) }}  {{--old() mantiene la informacion vieja si hay un error al cargar  el nuevo--}}
                         </textarea>
