@@ -73,4 +73,13 @@ class IdeaPolicy
     {
         //
     }
+
+    /**
+     * Determine whether the user can update the like field.
+     */
+    public function updateLikes(User $user, Idea $idea): bool
+    {
+        return $idea->user()->isNot($user); //podré dar like si el user asociado a la idea -> $idea->user()
+                                            // no es el que está autenticado  ->isNot($user)
+    }
 }
