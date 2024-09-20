@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use PhpParser\Node\Expr\BinaryOp\BooleanOr;
 
 class User extends Authenticatable
 {
@@ -69,4 +70,8 @@ class User extends Authenticatable
         return $this->belongsToMany(Idea::class);
     }
 
+    public function iLikeIt($ideaId):bool
+    {
+        return $this->ideasLiked()->where('idea_id' , $ideaId)->exists();
+    }
 }
