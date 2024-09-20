@@ -27,9 +27,9 @@ class IdeaController extends Controller
     ];
 
 
-    public function index(): View
+    public function index(Request $request): View
     {
-        $ideas = Idea::all(); //DB::table('ideas')->get(); //selet * from ideas
+        $ideas = Idea::myIdeas($request->filtro)->theBests($request->filtro)->get(); //DB::table('ideas')->get(); //selet * from ideas
         return view('ideas.index', ['ideas' => $ideas]);  //nombre variable view => variable en controller
 
     }
